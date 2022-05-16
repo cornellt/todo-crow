@@ -1,42 +1,23 @@
 import React, { useState } from 'react';
-import { Center, Input, InputGroup, Button, InputRightElement } from '@chakra-ui/react'
+import { getFirestore } from 'firebase/firestore/lite';
+import { getAuth } from "firebase/auth";
+import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Box, StackDivider } from '@chakra-ui/react'
+import * as EmailValidator from 'email-validator'
+import app from '../firebase/client'
+import { useAuthState } from "react-firebase-hooks/auth";
+import SignIn from '../components/signin';
+import SignUp from '../components/signup';
 
 export default function Home() {
-
-  const [show, setShow] = useState(false);
-  const handleShowPasswordInput = () => setShow(!show);
-
-  const [emailValue, setEmailValue] = useState(' ');
-  const handleChangeEmailInput = (event) => setEmailValue(event.target.value)
-
-  function handleFormSubmit(e) {
-    e.preventDefault();
-  }
+  // User Authentication
+  const auth = getAuth(app);
+  const [user, loading, error] = useAuthState(auth);
 
   return (
-  <Center bg='gray.400' h='300px' w='50%' mx='auto' my={3} color='white'>
-    <form onSubmit={handleFormSubmit} >
-      <InputGroup size='md'>
-        <Input
-          value={emailValue}
-          onChange={handleChangeEmailInput}
-          placeholder='Enter email'
-          color='black'
-        />
-        <br/>
-        <Input
-          pr='4.5rem'
-          type={show ? 'text' : 'password'}
-          placeholder='Enter password'
-          color='white'
-        />
-        <InputRightElement width='4.5rem'>
-          <Button h='1.75rem' size='sm' onClick={handleShowPasswordInput} colorScheme='blackAlpha' >
-            {show ? 'Hide' : 'Show'}
-          </Button>
-        </InputRightElement>
-      </InputGroup>
-    </form>
-  </Center>
+    <Center width='100%' p={3}>
+      <HStack spacing='24px'>
+        <SignIn auth={auth}></SignIn>
+      </HStack>
+    </Center>
   )
 }

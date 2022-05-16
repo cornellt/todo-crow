@@ -1,7 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
 
-// TODO: Replace the following with your app's Firebase project configuration
 // const firebaseConfig = {
 //   apiKey: process.env.FIREBASE_API_KEY,
 //   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -12,6 +10,7 @@ import { getFirestore } from 'firebase/firestore/lite';
 //   measurementId: process.env.FIREBASE_MEASUREMENT_ID
 // };
 
+//Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAVWg1B-BlKbRrWhjWIkBhe-h501AYatyw",
   authDomain: "todo-crow.firebaseapp.com",
@@ -24,6 +23,4 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export default firebase;
-export const auth  = getAuth(app);
-export const db = getFirestore(app);
+export default app;
