@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { getFirestore } from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
-import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Box, StackDivider } from '@chakra-ui/react'
-import * as EmailValidator from 'email-validator'
+import { Center, Spinner } from '@chakra-ui/react'
 import app from '../firebase/client'
 import { useAuthState } from "react-firebase-hooks/auth";
-import SignIn from '../components/signin';
-import SignUp from '../components/signup';
+import SignIn from '../components/SignIn';
+import Header from '../components/Header'
 
 export default function Home() {
   // User Authentication
@@ -14,10 +13,13 @@ export default function Home() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <Center width='100%' p={3}>
-      <HStack spacing='24px'>
-        <SignIn auth={auth}></SignIn>
-      </HStack>
-    </Center>
+    <>
+      <Header auth={auth}/>
+      <Center width='100%' p={3}>
+        {!user && !loading && <SignIn auth={auth}/>}
+        {user && !loading && <></>}
+        {loading && <Spinner size='xl'/>}
+      </Center>
+    </>
   )
 }
