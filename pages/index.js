@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { getFirestore } from 'firebase/firestore/lite';
-import { getAuth } from "firebase/auth";
-import { Center, Spinner } from '@chakra-ui/react'
-import app from '../firebase/client'
+import { Center, Spinner } from '@chakra-ui/react';
+import { auth } from '../firebase/client'
 import { useAuthState } from "react-firebase-hooks/auth";
-import SignIn from '../components/SignIn';
-import Header from '../components/Header'
+import Header from '../components/Header';
 
 export default function Home() {
+  const router = useRouter();
   // User Authentication
-  const auth = getAuth(app);
   const [user, loading, error] = useAuthState(auth);
+  
+
+  useEffect(() => {
+    if(!(user || loading)) {
+      router.push('/login');
+    }
+  }, [user, loading]);
+  
 
   return (
     <>
       <Header auth={auth}/>
       <Center width='100%' p={3}>
-        {!user && !loading && <SignIn auth={auth}/>}
         {user && !loading && <></>}
         {loading && <Spinner size='xl'/>}
       </Center>

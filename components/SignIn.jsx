@@ -4,12 +4,12 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Divider } from '@chakra-ui/react'
 import SignUp from '../components/SignUp';
 import * as EmailValidator from 'email-validator';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function SignIn(props) {
+    const router = useRouter();
     const [user, loading, error] = useAuthState(props.auth);
-
-    const [showSignUp, setShowSignUp] = useState(false);
-    const toggleShowSignUp = () => setShowSignUp(!showSignUp);
 
     const [emailValue, setEmailValue] = useState('');
     const handleChangeEmailInput = (event) => setEmailValue(event.target.value);
@@ -38,51 +38,51 @@ export default function SignIn(props) {
         }
     }
 
-    return (
-        <Center>
-            {showSignUp && <SignUp auth={props.auth} returnToSignIn={toggleShowSignUp} />}
-            {!showSignUp &&
-                <VStack
-                    spacing={4}
-                    align='stretch'
-                    width='100%'
-                >
-                    <Heading mx='auto'>Sign In or Register</Heading>
-                    <Divider borderColor='gray.200' />
-                    <Input
-                        value={emailValue}
-                        onChange={handleChangeEmailInput}
-                        placeholder='Enter email'
-                    />
-                    <form onSubmit={handleSignInForm}>
-                        <InputGroup>
-                            <Input
-                                pr='4.5rem'
-                                type={show ? 'text' : 'password'}
-                                value={passwordValue}
-                                onChange={handleChangePasswordInput}
-                                placeholder='Enter password'
 
-                            />
-                            <InputRightElement width='4.5rem'>
-                                <Button
-                                    h='1.75rem'
-                                    size='sm'
-                                    onClick={toggleShowPassword}
-                                >
-                                    {show ? 'Hide' : 'Show'}
-                                </Button>
-                            </InputRightElement>
-                        </InputGroup>
-                    </form>
-                    <Center>
-                        <HStack>
-                            <Button onClick={handleSignInForm}>Sign In</Button>
-                            <Button onClick={toggleShowSignUp}>Register</Button>
-                        </HStack>
-                    </Center>
-                </VStack>
-            }
+    return (
+        <Center border='1px' borderColor='gray.300' backgroundColor='gray.100'p={8} m={8} borderRadius={8}>
+            <VStack
+                spacing={4}
+                align='stretch'
+                width='100%'
+            >
+                <Heading mx='auto'>Sign In or Register</Heading>
+                <Divider borderColor='gray.200' />
+                <Input
+                    value={emailValue}
+                    onChange={handleChangeEmailInput}
+                    placeholder='Enter email'
+                    borderColor='gray.300'
+                />
+                <form onSubmit={handleSignInForm}>
+                    <InputGroup>
+                        <Input
+                            pr='4.5rem'
+                            type={show ? 'text' : 'password'}
+                            value={passwordValue}
+                            onChange={handleChangePasswordInput}
+                            placeholder='Enter password'
+                            borderColor='gray.300'
+
+                        />
+                        <InputRightElement width='4.5rem'>
+                            <Button
+                                h='1.75rem'
+                                size='sm'
+                                onClick={toggleShowPassword}
+                            >
+                                {show ? 'Hide' : 'Show'}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
+                </form>
+                <Center>
+                    <HStack>
+                        <Button onClick={handleSignInForm} colorScheme={'green'}>Sign In</Button>
+                        <Link href='/register' passHref><Button colorScheme={'blue'}>Register</Button></Link>
+                    </HStack>
+                </Center>
+            </VStack>
         </Center>
     );
 }
