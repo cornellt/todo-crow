@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getFirestore } from 'firebase/firestore/lite';
 import { Center, Spinner } from '@chakra-ui/react';
@@ -11,12 +11,11 @@ export default function Home() {
   // User Authentication
   const [user, loading, error] = useAuthState(auth);
   
-
   useEffect(() => {
     if(!(user || loading)) {
-      router.push('/login');
+      router.push('login');
     }
-  }, [user, loading]);
+  }, [user, loading, router]);
   
 
   return (

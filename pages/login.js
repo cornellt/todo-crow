@@ -3,10 +3,18 @@ import { Center } from '@chakra-ui/react';
 import { auth } from '../firebase/client';
 import SignIn from '../components/SignIn';
 import Header from '../components/Header';
-
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Login() {
-  const [user, loading, error] = useAuthState(auth);
+    const router = useRouter(); 
+    const [user, loading, error] = useAuthState(auth);
+
+    useEffect(() => {
+    if(user) {
+        router.push('index');
+    }
+    }, [user, loading, router]);
 
     return(
     <>

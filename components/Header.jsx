@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
-import { Heading, Flex, Spacer, InputGroup, Button, InputRightElement, VStack, HStack, Box, StackDivider } from '@chakra-ui/react'
+import { Heading, Flex, Spacer, Button } from '@chakra-ui/react'
 
 
 export default function Header(props) {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Divider } from '@chakra-ui/react'
-import SignUp from '../components/SignUp';
 import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -40,19 +39,20 @@ export default function SignIn(props) {
 
 
     return (
-        <Center border='1px' borderColor='gray.300' backgroundColor='gray.100'p={8} m={8} borderRadius={8}>
+        <Center border='1px' borderColor='gray.300' backgroundColor='gray.200' p={8} m={8} borderRadius={8}>
             <VStack
                 spacing={4}
                 align='stretch'
                 width='100%'
             >
                 <Heading mx='auto'>Sign In or Register</Heading>
-                <Divider borderColor='gray.200' />
+                <Divider borderColor='gray.400'/>
                 <Input
                     value={emailValue}
                     onChange={handleChangeEmailInput}
                     placeholder='Enter email'
                     borderColor='gray.300'
+                    backgroundColor='gray.100'
                 />
                 <form onSubmit={handleSignInForm}>
                     <InputGroup>
@@ -63,7 +63,7 @@ export default function SignIn(props) {
                             onChange={handleChangePasswordInput}
                             placeholder='Enter password'
                             borderColor='gray.300'
-
+                            backgroundColor='gray.100'
                         />
                         <InputRightElement width='4.5rem'>
                             <Button
@@ -77,7 +77,7 @@ export default function SignIn(props) {
                     </InputGroup>
                 </form>
                 <Center>
-                    <HStack>
+                    <HStack mt={3} mb={0}>
                         <Button onClick={handleSignInForm} colorScheme={'green'}>Sign In</Button>
                         <Link href='/register' passHref><Button colorScheme={'blue'}>Register</Button></Link>
                     </HStack>
