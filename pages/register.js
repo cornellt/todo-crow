@@ -1,92 +1,137 @@
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Center, Spinner } from '@chakra-ui/react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Center, Spinner, useToast } from '@chakra-ui/react';
+import { useCreateUserWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/client';
 import SignUp from '../components/SignUp';
 import Header from '../components/Header';
 import { useState, useEffect } from 'react';
 import * as EmailValidator from 'email-validator';
-
-
+import { useRouter } from 'next/router';
 
 export default function Register() {
-    const [user, loading, error] = useAuthState(auth);
+    const router = useRouter();
 
-      //User Input Credentials
-  const [email, setEmail] = useState('');
-  const handleChangeEmail = (event) => {
-    setEmail(event.target.value);
-  }
-  useEffect(() => {
-    setEmailValid(EmailValidator.validate(email));
-  }, [email]);
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
 
-  const [password, setPassword] = useState('');
-  const handleChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const handleChangeConfirmPassword = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-  useEffect(() => {
-    setPasswordLongEnough(password.length >= 6);
-    setPasswordsMatch(password === confirmPassword);
-  }, [password, confirmPassword]);
+    const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
 
-  //Checks before registration sent
-  const [emailValid, setEmailValid] = useState(false);
-  const [passwordLongEnough, setPasswordLongEnough] = useState(false);
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
+    //State for register form
+    const [email, setEmail] = useState('');
+    const handleChangeEmail = (event) => {
+        setEmail(event.target.value);
+    }
+    useEffect(() => {
+        setEmailValid(EmailValidator.validate(email));
+    }, [email]);
+
+    const [password, setPassword] = useState('');
+    const handleChangePassword = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const handleChangeConfirmPassword = (event) => {
+        setConfirmPassword(event.target.value);
+    };
+    useEffect(() => {
+        setPasswordLongEnough(password.length >= 6);
+        setPasswordsMatch(password === confirmPassword);
+    }, [password, confirmPassword]);
 
 
-  const [registrationValid, setRegistrationValid] = useState(false);
-  useEffect(() => {
-    setRegistrationValid(emailValid && passwordsMatch && passwordLongEnough);
-  }, [emailValid, passwordsMatch, passwordLongEnough]);
+    //Checks before registration sent
+    const [emailValid, setEmailValid] = useState(false);
+    const [passwordLongEnough, setPasswordLongEnough] = useState(false);
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [registrationValid, setRegistrationValid] = useState(false);
+    useEffect(() => {
+        setRegistrationValid(emailValid && passwordsMatch && passwordLongEnough);
+    }, [emailValid, passwordsMatch, passwordLongEnough]);
+
+    const handleSignUpForm = () => {
+        if (registrationValid) {
+            createUserWithEmailAndPassword(email, password);
+        }
+        else {
+            console.log('Registration invalid!');
+        }
+    }
+
+    //redirect to '/' if user is already logged in
+    useEffect(() => {
+        if(userAuthState && !user) {
+            router.push('/');
+    }}, [userAuthState, router, user]);
 
 
-  const handleSignUpForm = (event) => {
-    event.preventDefault();
+    //redirect to '/' with 'reg-success' Toast popup upon successful registration
+    useEffect(() => {
+        if (!error && user) {
+            // Signed in 
+            toast({
+                title: 'Registration Successful',
+                description: `You've been logged in automatically.`,
+                status: 'success',
+                duration: 6000,
+                isClosable: true,
+                position: 'top',
+              });
 
-    if(registrationValid) {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-          console.log(errorMessage)
-        });
-      }
-      else {
-        console.log('Registration invalid!');
-      }
-  }
+            router.push({
+                pathname: '/',
+                query: { result: 'reg-success' }
+            });
+        }
+    }, [user, error, router, toast])
 
-    return(
-    <>
-        <Header auth={auth}/>
-        <Center width='100%' p={3}>
-            <SignUp 
-                email={email} 
-                handleChangeEmail={handleChangeEmail} 
-                emailValid={emailValid} 
-                passwordsMatch={passwordsMatch} 
-                passwordLongEnough={passwordLongEnough} 
-                password={password} 
-                handleChangePassword={handleChangePassword} 
-                confirmPassword={confirmPassword} 
-                handleChangeConfirmPassword={handleChangeConfirmPassword} 
-                handleSignUpForm={handleSignUpForm} 
-                registrationValid={registrationValid} />
-        </Center>
-        
-    </>)
+
+    //registration error toast
+    const toast = useToast();
+    useEffect(() => {
+        if (error) {
+            toast({
+                title: 'Error',
+                description: (error.code === 'auth/email-already-in-use' ? 'Email already in use.' : 'Account creation failed.'),
+                status: 'error',
+                duration: 6000,
+                isClosable: true,
+                position: 'top'
+            });
+        }
+    }, [error, toast]);
+
+    return (
+        <>
+            {(loading || loadingAuthState) &&
+                <Center mt={'25vh'}>
+                    <Spinner size='xl' />
+                </Center>
+            }
+            {!(loading || loadingAuthState) && !user && !userAuthState &&
+                <>
+                    <Header auth={auth} />
+                    <Center p={3}>
+                        <SignUp
+                            email={email}
+                            handleChangeEmail={handleChangeEmail}
+                            emailValid={emailValid}
+                            password={password}
+                            handleChangePassword={handleChangePassword}
+                            passwordLongEnough={passwordLongEnough}
+                            confirmPassword={confirmPassword}
+                            handleChangeConfirmPassword={handleChangeConfirmPassword}
+                            passwordsMatch={passwordsMatch}
+                            registrationValid={registrationValid}
+                            handleSignUpForm={handleSignUpForm}
+                            error={error}
+                        />
+                    </Center>
+                </>
+            }
+        </>)
 }

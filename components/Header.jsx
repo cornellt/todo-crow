@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { Heading, Flex, Spacer, Button } from '@chakra-ui/react'
@@ -12,10 +11,10 @@ export default function Header(props) {
     };
 
     return(      
-        <Flex background='blue.600' height={['6vh', '5vh', '4vh']}>
+        <Flex background='blue.600'>
             <Heading mx={3}>todo-crow</Heading>
             <Spacer/>
-            {user && <Button my='auto' mx='3' onClick={signUserOut}>Log Out</Button>}
+            {user && <Button my='1' mx='3' onClick={signUserOut}>Log Out</Button>}
         </Flex>
     );
 }

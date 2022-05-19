@@ -1,6 +1,7 @@
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -13,3 +14,7 @@ onAuthStateChanged(auth, (user) => {
     // ...
   }
 });
+
+export default function Todos() {
+  return(<p>Hi</p>)
+}

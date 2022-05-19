@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-
-import { Center, Heading, Text, Input, InputGroup, Button, InputRightElement, VStack, Alert, AlertIcon, Divider, Link as ChakraLink} from '@chakra-ui/react';
+import { Center, Heading, Text, Input, InputGroup, Button, InputRightElement, VStack, Alert, AlertIcon, Divider, Link as ChakraLink } from '@chakra-ui/react';
 
 export default function SignUp(props) {
   const [emailBlurred, setEmailBlurred] = useState(false);
@@ -9,34 +8,32 @@ export default function SignUp(props) {
   const [confirmPasswordBlurred, setConfirmPasswordBlurred] = useState(false);
 
   const [showPasswords, setShowPasswords] = useState(false);
-  const toggleShowPasswords = () => setShowPasswords(!show);
+  const toggleShowPasswords = () => setShowPasswords(!showPasswords);
 
-  return(
+  const submitForm = (e) => {
+    e.preventDefault();
+    if (props.registrationValid) {
+      props.handleSignUpForm();
+    }
+  };
+
+  return (
     <VStack>
       {(!props.emailValid && emailBlurred && props.email.length > 0) &&
-        <VStack>
-          <Alert status='error'>
-            <AlertIcon />
-            Email invalid! Please use a valid email.
-          </Alert>
-        </VStack>
-      }
-      {(!props.passwordsMatch && passwordBlurred && confirmPasswordBlurred) &&
-        <VStack>
-          <Alert status='error'>
-            <AlertIcon />
-            Your passwords must match!
-          </Alert>
-        </VStack>
-      }
-      {(!props.passwordLongEnough && passwordBlurred && props.password.length > 0) &&
-        <VStack>
-          <Alert status='error'>
-            <AlertIcon />
-            Your password must be at least 6 characters long!
-          </Alert>
-        </VStack>
-      }
+        <Alert status='error'>
+          <AlertIcon />
+          Email invalid! Please use a valid email address.
+        </Alert>}
+      {(!props.passwordsMatch && passwordBlurred && confirmPasswordBlurred && props.password.length > 0 && props.confirmPassword.length > 0) &&
+        <Alert status='error'>
+          <AlertIcon />
+          Your passwords must match!
+        </Alert>}
+      {(!props.passwordLongEnough && passwordBlurred && confirmPasswordBlurred && props.password.length > 0) &&
+        <Alert status='error'>
+          <AlertIcon />
+          Your password must be at least 6 characters long!
+        </Alert>}
       <Center border='1px' borderColor='gray.300' backgroundColor='gray.200' p={8} m={8} borderRadius={8}>
         <VStack
           spacing={4}
@@ -45,57 +42,68 @@ export default function SignUp(props) {
         >
           <Heading mx='auto'>Register</Heading>
           <Divider borderColor='gray.400' />
-          <Input
-            value={props.email}
-            onChange={props.handleChangeEmail}
-            onBlur={() => setEmailBlurred(true)}
-            placeholder='Enter email'
-            borderColor='gray.300'
-            backgroundColor='gray.100'
-          />
-          <InputGroup>
+          <form onSubmit={submitForm}>
             <Input
-              pr='4.5rem'
-              type={showPasswords ? 'text' : 'password'}
-              value={props.password}
-              onChange={props.handleChangePassword}
-              onBlur={() => {setPasswordBlurred(true)}}
-              placeholder='Enter password'
+              value={props.email}
+              onChange={props.handleChangeEmail}
+              onBlur={() => setEmailBlurred(true)}
+              onFocus={() => setEmailBlurred(false)}
+              placeholder='Enter email'
               borderColor='gray.300'
               backgroundColor='gray.100'
             />
-            <InputRightElement width='4.5rem'>
-              <Button
-                h='1.75rem'
-                size='sm'
-                onClick={toggleShowPasswords}
-              >
-                {showPasswords ? 'Hide' : 'Show'}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <InputGroup>
-            <Input
-              pr='4.5rem'
-              type={showPasswords ? 'text' : 'password'}
-              value={props.confirmPassword}
-              onChange={props.handleChangeConfirmPassword}
-              onBlur={() => {setConfirmPasswordBlurred(true)}}
-              placeholder='Confirm password'
-              borderColor='gray.300'
-              backgroundColor='gray.100'
-            />
-            <InputRightElement width='4.5rem'>
-              <Button
-                h='1.75rem'
-                size='sm'
-                onClick={toggleShowPasswords}
-              >
-                {showPasswords ? 'Hide' : 'Show'}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <Button onClick={props.handleSignUpForm} isDisabled={!props.registrationValid} colorScheme='blue'>Register</Button>
+          </form>
+          <form onSubmit={submitForm}>
+            <InputGroup>
+              <Input
+                pr='4.5rem'
+                type={showPasswords ? 'text' : 'password'}
+                value={props.password}
+                onChange={props.handleChangePassword}
+                onBlur={() => setPasswordBlurred(true)}
+                onFocus={() => setPasswordBlurred(false)}
+                placeholder='Enter password'
+                borderColor='gray.300'
+                backgroundColor='gray.100'
+              />
+              <InputRightElement width='4.5rem'>
+                <Button
+                  h='1.75rem'
+                  size='sm'
+                  onClick={toggleShowPasswords}
+                  tabIndex='-1'
+                >
+                  {showPasswords ? 'Hide' : 'Show'}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </form>
+          <form onSubmit={submitForm}>
+            <InputGroup>
+              <Input
+                pr='4.5rem'
+                type={showPasswords ? 'text' : 'password'}
+                value={props.confirmPassword}
+                onChange={props.handleChangeConfirmPassword}
+                onBlur={() => setConfirmPasswordBlurred(true)}
+                onFocus={() => setConfirmPasswordBlurred(false)}
+                placeholder='Confirm password'
+                borderColor='gray.300'
+                backgroundColor='gray.100'
+              />
+              <InputRightElement width='4.5rem'>
+                <Button
+                  h='1.75rem'
+                  size='sm'
+                  onClick={toggleShowPasswords}
+                  tabIndex='-1'
+                >
+                  {showPasswords ? 'Hide' : 'Show'}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </form>
+          <Button onClick={submitForm} isDisabled={!props.registrationValid} colorScheme='blue'>Register</Button>
           <Text mx='auto'>
             Already have an account? <Link href='/login' passHref><ChakraLink>Sign In</ChakraLink></Link> instead.
           </Text>
