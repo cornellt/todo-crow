@@ -68,6 +68,8 @@ export default function Register() {
             router.push('/');
     }}, [userAuthState, router, user]);
 
+    //registration error toast
+    const toast = useToast();
 
     //redirect to '/' with 'reg-success' Toast popup upon successful registration
     useEffect(() => {
@@ -89,9 +91,6 @@ export default function Register() {
         }
     }, [user, error, router, toast])
 
-
-    //registration error toast
-    const toast = useToast();
     useEffect(() => {
         if (error) {
             toast({
