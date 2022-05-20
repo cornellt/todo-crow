@@ -71,7 +71,7 @@ export default function Register() {
     //registration error toast
     const toast = useToast();
 
-    //redirect to '/' with 'reg-success' Toast popup upon successful registration
+    //redirect to '/' with Toast popup upon successful registration
     useEffect(() => {
         if (!error && user) {
             // Signed in 
@@ -81,7 +81,7 @@ export default function Register() {
                 status: 'success',
                 duration: 6000,
                 isClosable: true,
-                position: 'top',
+                position: 'top'
               });
 
             router.push({
