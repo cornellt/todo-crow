@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Divider, Tooltip } from '@chakra-ui/react'
+import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Divider, Tooltip, Text, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link';
 
 export default function SignIn(props) {
@@ -8,7 +8,7 @@ export default function SignIn(props) {
 
     const submitForm = (e) => {
         e.preventDefault();
-        if(props.signInValid) {
+        if (props.signInValid) {
             props.handleSignInForm();
         }
     };
@@ -20,8 +20,8 @@ export default function SignIn(props) {
                 align='stretch'
                 width='100%'
             >
-                <Heading mx='auto'>Sign In or Register</Heading>
-                <Divider borderColor='gray.400'/>
+                <Heading mx='auto'>Sign In</Heading>
+                <Divider borderColor='gray.400' />
                 <form onSubmit={submitForm}>
                     <Input
                         value={props.email}
@@ -53,19 +53,17 @@ export default function SignIn(props) {
                         </InputRightElement>
                     </InputGroup>
                 </form>
-                <Center>
-                    <HStack mt={3} mb={0}>
-                        {!props.signInValid &&
-                            <Tooltip hasArrow label={!props.emailValid ? 'Email is invalid!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
-                                <Button onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
-                            </Tooltip>
-                        }
-                        {props.signInValid &&
-                            <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button>
-                        }
-                        <Link href='/register' passHref><Button colorScheme={'blue'}>Register</Button></Link>
-                    </HStack>
-                </Center>
+                    {!props.signInValid &&
+                        <Tooltip hasArrow label={!props.emailValid ? 'Email is invalid!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
+                            <Button align='stretch' width='100%' onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
+                        </Tooltip>
+                    }
+                    {props.signInValid &&
+                        <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button>
+                    }
+                <Text align='center'>
+                    Need an account? <Link href='/register' passHref><ChakraLink color='blue.600'>Register</ChakraLink></Link>.
+                </Text>
             </VStack>
         </Center>
     );

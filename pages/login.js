@@ -48,25 +48,30 @@ export default function Login() {
         }
     };
 
-    //redirect to '/' if user is already logged in
+    //redirect to '/' if user is already authenticated
     useEffect(() => {
         if(userAuthState && !user) {
             router.push('/');
     }}, [userAuthState, router, user]);
 
-    //redirect to '/' after login
-    useEffect(() => {
-        if (!error && user) {
-            // Signed in 
-            router.push({
-                pathname: '/',
-                query: { result: 'login-success' }
-            });
-        }
-    }, [user, error, router])
-
     //registration error toast
     const toast = useToast();
+
+    //redirect to '/' with Toast popup after successful login
+    useEffect(() => {
+        if (!error && user) {
+            toast({
+                title: 'Login Successful',
+                status: 'success',
+                duration: 6000,
+                isClosable: true,
+                position: 'top'
+              });
+            router.push('/');
+        }
+    }, [user, error, router, toast])
+
+
     useEffect(() => {
         if (error) {
             toast({

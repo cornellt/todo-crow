@@ -104,8 +104,8 @@ export default function SignUp(props) {
             </InputGroup>
           </form>
           <Button onClick={submitForm} isDisabled={!props.registrationValid} colorScheme='blue'>Register</Button>
-          <Text mx='auto'>
-            Already have an account? <Link href='/login' passHref><ChakraLink>Sign In</ChakraLink></Link> instead.
+          <Text align='center'>
+            Already have an account? <Link href='/login' passHref><ChakraLink color='green'>Sign In</ChakraLink></Link> instead.
           </Text>
         </VStack>
       </Center>
