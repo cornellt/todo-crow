@@ -1,14 +1,16 @@
 import { Center, Spinner, useToast } from '@chakra-ui/react';
 import { useCreateUserWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase/client';
+import { auth, app } from '../firebase/client';
 import SignUp from '../components/SignUp';
 import Header from '../components/Header';
 import { useState, useEffect } from 'react';
 import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
 
+import { getFirestore } from 'firebase/firestore';
+
 export default function Register() {
-    const router = useRouter();
+    const { push } = useRouter();
 
     const [
         createUserWithEmailAndPassword,
@@ -18,7 +20,6 @@ export default function Register() {
     ] = useCreateUserWithEmailAndPassword(auth);
 
     const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
-
 
     //State for register form
     const [email, setEmail] = useState('');
@@ -65,8 +66,8 @@ export default function Register() {
     //redirect to '/' if user is already logged in
     useEffect(() => {
         if(userAuthState && !user) {
-            router.push('/');
-    }}, [userAuthState, router, user]);
+            push('/');
+    }}, [userAuthState, push, user]);
 
     //registration error toast
     const toast = useToast();
@@ -74,7 +75,7 @@ export default function Register() {
     //redirect to '/' with Toast popup upon successful registration
     useEffect(() => {
         if (!error && user) {
-            // Signed in 
+            // Signed in
             toast({
                 title: 'Registration Successful',
                 description: `You've been logged in automatically.`,
@@ -82,17 +83,15 @@ export default function Register() {
                 duration: 6000,
                 isClosable: true,
                 position: 'top'
-              });
+                });
 
-            router.push({
-                pathname: '/',
-                query: { result: 'reg-success' }
-            });
+            push('/');
         }
-    }, [user, error, router, toast])
+    }, [user, error, push, toast])
 
     useEffect(() => {
         if (error) {
+            console.log(error);
             toast({
                 title: 'Error',
                 description: (error.code === 'auth/email-already-in-use' ? 'Email already in use.' : 'Account creation failed.'),
