@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import * as EmailValidator from 'email-validator';
 
 export default function Login() {
-    const router = useRouter(); 
+    const { push } = useRouter(); 
 
     const [
         signInWithEmailAndPassword,
@@ -20,16 +20,18 @@ export default function Login() {
     const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
     const [email, setEmail] = useState('');
-    const handleChangeEmail = (event) => setEmail(event.target.value);
-    useEffect(() => {
-        setEmailValid(EmailValidator.validate(email));
-    }, [email]);
+    const handleChangeEmail = (event) => {
+        const currentValue = event.target.value;
+        setEmail(currentValue);
+        setEmailValid(EmailValidator.validate(currentValue));
+    }
 
     const [password, setPassword] = useState('');
-    const handleChangePassword = (event) => setPassword(event.target.value);
-    useEffect(() => {
-        setPasswordLongEnough(password.length >= 6);
-    }, [password]);
+    const handleChangePassword = (event) => {
+        const currentValue = event.target.value;
+        setPassword(currentValue);
+        setPasswordLongEnough(currentValue.length >= 6);
+    }
 
     //Checks before login button is enabled
     const [emailValid, setEmailValid] = useState(false);
@@ -51,8 +53,8 @@ export default function Login() {
     //redirect to '/' if user is already authenticated
     useEffect(() => {
         if(userAuthState && !user) {
-            router.push('/');
-    }}, [userAuthState, router, user]);
+            push('/');
+    }}, [userAuthState, push, user]);
 
     //registration error toast
     const toast = useToast();
@@ -67,9 +69,9 @@ export default function Login() {
                 isClosable: true,
                 position: 'top'
               });
-            router.push('/');
+            push('/');
         }
-    }, [user, error, router, toast])
+    }, [user, error, push, toast])
 
 
     useEffect(() => {
