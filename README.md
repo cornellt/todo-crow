@@ -1,3 +1,9 @@
-todo-crow
+todo-crow by Thomas Cornell
 
-Thomas Cornell
+
+Implemented and deployed using:
+- Next.js
+- Vercel
+- Chakra UI
+- Firebase
+
