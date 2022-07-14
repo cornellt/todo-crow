@@ -110,7 +110,7 @@ export default function Register() {
             }
             {!(loading || loadingAuthState) && !user && !userAuthState &&
                 <>
-                    <Header auth={auth} />
+                    <Header />
                     <Center p={3}>
                         <SignUp
                             email={email}

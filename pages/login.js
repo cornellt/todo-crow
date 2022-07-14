@@ -97,7 +97,7 @@ export default function Login() {
         }
         {!(loading || loadingAuthState) && !user && !userAuthState &&
             <>
-                <Header auth={auth}/>
+                <Header />
                 <Center p={3}>
                     <SignIn 
                         email={email}

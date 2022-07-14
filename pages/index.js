@@ -77,7 +77,7 @@ export default function Home() {
 
   return (
     <>
-      <Header auth={auth} />
+      <Header />
       <Center p={3}>
         {user && !loading && 
           <VStack>
