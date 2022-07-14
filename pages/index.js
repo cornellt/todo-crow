@@ -5,12 +5,12 @@ import { Center, Spinner } from '@chakra-ui/react';
 import { auth, app } from '../firebase/client';
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header from '../components/Header';
-import Todo from '../components/Todo';
+//import Todo from '../components/Todo';
 import { useState } from 'react';
 
 import { collection, addDoc, query, where, onSnapshot } from "firebase/firestore";
 
-import { Heading, Input, InputGroup, Button, Text, VStack, HStack, Divider } from '@chakra-ui/react';
+import { Input, Text, VStack} from '@chakra-ui/react';
 
 
 export default function Home() {
@@ -54,7 +54,7 @@ export default function Home() {
   //cleanup upon deletion
   useEffect(() => {
     return(() => {
-      unsubscribe && console.log('unsubbed!') && unsubscribe();
+      unsubscribe && unsubscribe() && console.log('unsubbed!');
     })
   }, [])
 
