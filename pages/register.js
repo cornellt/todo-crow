@@ -48,7 +48,7 @@ export default function Register() {
     const [emailValid, setEmailValid] = useState(false);
     const [passwordLongEnough, setPasswordLongEnough] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [registrationValid, setRegistrationValid] = useState(false);
+    const [registrationValid, setRegistrationValid] = useState(emailValid && passwordLongEnough && passwordsMatch);
 
     //emailValid, passwordsMatch, and passwordLongEnough are the 3 requirements for valid Registration. If any of these variables change, update registrationValid accordingly
     useEffect(() => {
