@@ -42,7 +42,7 @@ export default function Home() {
         setTodoList(todos);
       }));
     }
-  }, [user]);
+  }, [user, db]);
 
   //redirect to login if user is not authenticated or loading
   useEffect(() => {
@@ -50,13 +50,6 @@ export default function Home() {
       push('login');
     }
   }, [user, loading, push]);
-
-  //cleanup upon deletion
-  useEffect(() => {
-    return(() => {
-      unsubscribe && unsubscribe() && console.log('unsubbed!');
-    })
-  }, [])
 
   const addNewTodo = async (e) => {
     e.preventDefault();
