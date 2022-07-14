@@ -41,9 +41,10 @@ export default function Login() {
         setSignInValid(emailValid && passwordLongEnough);
     }, [emailValid, passwordLongEnough]);
 
+    //handler for sign in form
     const handleSignInForm = () => {
         if (signInValid) {
-            signInWithEmailAndPassword(email, password)
+            signInWithEmailAndPassword(email, password);
         }
         else {
             console.log("Sign in invalid!");
@@ -73,7 +74,7 @@ export default function Login() {
         }
     }, [user, error, push, toast])
 
-
+    //show an Error toast if the login fails because of an incorrect email/password
     useEffect(() => {
         if (error) {
             toast({
