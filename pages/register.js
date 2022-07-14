@@ -1,13 +1,11 @@
 import { Center, Spinner, useToast } from '@chakra-ui/react';
 import { useCreateUserWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth';
-import { auth, app } from '../firebase/client';
+import { auth } from '../firebase/client';
 import SignUp from '../components/SignUp';
 import Header from '../components/Header';
 import { useState, useEffect } from 'react';
 import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
-
-import { getFirestore } from 'firebase/firestore';
 
 export default function Register() {
     const { push } = useRouter();
@@ -112,7 +110,7 @@ export default function Register() {
             }
             {!(loading || loadingAuthState) && !user && !userAuthState &&
                 <>
-                    <Header auth={auth} />
+                    <Header />
                     <Center p={3}>
                         <SignUp
                             email={email}
