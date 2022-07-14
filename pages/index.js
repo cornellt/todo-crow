@@ -5,7 +5,7 @@ import { Center, Spinner } from '@chakra-ui/react';
 import { auth, app } from '../firebase/client';
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header from '../components/Header';
-import Todos from '../components/Todos';
+import Todo from '../components/Todo';
 import { useState } from 'react';
 
 import { collection, addDoc, query, where, onSnapshot } from "firebase/firestore";
