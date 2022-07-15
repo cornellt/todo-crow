@@ -5,7 +5,7 @@ import { Center, Spinner } from '@chakra-ui/react';
 import { auth, app } from '../firebase/client';
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header from '../components/Header';
-//import Todo from '../components/Todo';
+import Todo from '../components/Todo';
 import { useState } from 'react';
 
 import { collection, addDoc, query, where, onSnapshot } from "firebase/firestore";
@@ -78,7 +78,7 @@ export default function Home() {
               <Input onChange={changeTodoInput} value={todoInput} w={'50vw'} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
             </form>
               {todoList.map((item, index) =>
-                <Text key={index}>{item.title}</Text>
+                <Todo key={index} data={item}/>
               )}
             </VStack>
         }

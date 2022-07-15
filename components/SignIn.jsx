@@ -54,7 +54,7 @@ export default function SignIn(props) {
                     </InputGroup>
                 </form>
                     {!props.signInValid &&
-                        <Tooltip hasArrow label={!props.emailValid ? 'Email is invalid!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
+                        <Tooltip hasArrow label={!props.emailValid ? 'Enter a valid email!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
                             <Button align='stretch' width='100%' onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
                         </Tooltip>
                     }

@@ -1,7 +1,12 @@
-// import { useState } from "react";
-// import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, HStack, Divider } from '@chakra-ui/react'
+import { useState } from "react";
+import { Center, Box, Input, Text, Button, InputRightElement, VStack, HStack, Divider } from '@chakra-ui/react'
 
-export default function Todo() {
+export default function Todo(props) {
 
-  return(<p>Hi</p>)
+
+  return(
+    <Box>
+      <Text>{props.data.title}<Button mx='3'>Delete</Button></Text>
+    </Box>)
+
 }
