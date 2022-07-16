@@ -1,17 +1,13 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getFirestore } from 'firebase/firestore';
-import { Center, Spinner } from '@chakra-ui/react';
+import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
+import { Center, Spinner, Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 import { auth, app } from '../firebase/client';
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header from '../components/Header';
 import Todo from '../components/Todo';
 import { useState } from 'react';
-
-import { collection, addDoc, query, where, onSnapshot, deleteDoc, doc } from "firebase/firestore";
-
-import { Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons'
 
 
 
@@ -59,15 +55,13 @@ export default function Home() {
 
   const addNewTodo = async (e) => {
     e.preventDefault();
+    setTodoInput(todoInput => '');
     try {
-      const newTodoRef = await addDoc(collection(db, 'todos'), {
+      await addDoc(collection(db, 'todos'), {
         uid: user.uid,
         title: todoInput,
         completed: false
       });
-
-      console.log(`Document written with ID ${newTodoRef.id}`)
-      setTodoInput(todoInput => '');
     } catch (e) {
       console.log(e)
     }

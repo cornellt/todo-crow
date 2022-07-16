@@ -5,7 +5,7 @@ import { Image, Heading, Flex, Spacer, Button } from '@chakra-ui/react'
 
 
 export default function Header() {
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     const signUserOut = () => {
         signOut(auth);

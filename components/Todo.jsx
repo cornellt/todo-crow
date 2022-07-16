@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Checkbox, Box, Input, Text, Button, InputRightElement, VStack, HStack, Divider } from '@chakra-ui/react'
+import { Checkbox, Box, Text, Button } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
 
 
