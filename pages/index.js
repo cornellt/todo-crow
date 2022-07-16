@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
-import { Center, Spinner, Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
+import { Center, Spinner, Input, Button, VStack, Box, Divider, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { auth, app } from '../firebase/client';
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -70,11 +70,15 @@ export default function Home() {
 
   const deleteTodo = async (event) => {
     event.preventDefault();
+    console.log(`item to delete: `)
+    console.log(event.target)
     const documentId = event.target.id;
     
+    console.log(`deleting ${documentId}...`)
     if(documentId) {
       try {
         await deleteDoc(doc(db, 'todos', documentId));
+        console.log(`done deleting`)
       } catch(e) {
         console.log(e);
       }
@@ -90,7 +94,7 @@ export default function Home() {
             <form onSubmit={addNewTodo}>
               <Box display='flex'>
                 <Input onChange={changeTodoInput} value={todoInput} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
-                <Button mx='3' colorScheme={'green'}><AddIcon/></Button>
+                <IconButton mx='2' aria-label='Add todo' colorScheme='green' icon={<AddIcon/>} />
               </Box>
             </form>
             <Divider/>
