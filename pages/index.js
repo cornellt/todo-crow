@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import Todo from '../components/Todo';
 import { useState } from 'react';
 
-import { collection, addDoc, query, where, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, query, where, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 
 import { Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
 
@@ -38,7 +38,11 @@ export default function Home() {
       const q = query(collection(db, 'todos'), where('uid', '==', user.uid));
       setUnsubscribe(unsubscribe =>
         onSnapshot(q, (querySnapshot) => {
-        const todos = querySnapshot.docs.map(doc => doc.data());
+        const todos = querySnapshot.docs.map(doc => {
+          const id = doc.id;
+          const data = doc.data();
+          return {id, ...data };
+        });
         setTodoList(todos);
       }));
     }
@@ -68,6 +72,19 @@ export default function Home() {
 
   };
 
+  const deleteTodo = async (event) => {
+    event.preventDefault();
+    const documentId = event.target.id;
+    
+    if(documentId) {
+      try {
+        await deleteDoc(doc(db, 'todos', documentId));
+      } catch(e) {
+        console.log(e);
+      }
+    } 
+  }
+
   return (
     <>
       <Header />
@@ -82,7 +99,7 @@ export default function Home() {
             </form>
             <Divider/>
               {todoList.map((item, index) =>
-                <Todo key={index} data={item}/>
+                <Todo key={index} data={item} delete={deleteTodo}/>
               )}
           </VStack>
         }
