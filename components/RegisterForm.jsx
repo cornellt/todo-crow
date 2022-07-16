@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Center, Heading, Text, Input, InputGroup, Button, InputRightElement, VStack, Alert, AlertIcon, Divider, Link as ChakraLink } from '@chakra-ui/react';
 
-export default function SignUp(props) {
+export default function RegisterForm(props) {
   const [emailBlurred, setEmailBlurred] = useState(false);
   const [passwordBlurred, setPasswordBlurred] = useState(false);
   const [confirmPasswordBlurred, setConfirmPasswordBlurred] = useState(false);

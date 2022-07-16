@@ -1,7 +1,7 @@
 import { Center, Spinner, useToast } from '@chakra-ui/react';
 import { useCreateUserWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/client';
-import SignUp from '../components/SignUp';
+import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
 import { useState, useEffect } from 'react';
 import * as EmailValidator from 'email-validator';
@@ -114,7 +114,7 @@ export default function Register() {
                 <>
                     <Header />
                     <Center p={3}>
-                        <SignUp
+                        <RegisterForm
                             email={email}
                             handleChangeEmail={handleChangeEmail}
                             emailValid={emailValid}
