@@ -1,7 +1,7 @@
 import { useSignInWithEmailAndPassword, useAuthState } from 'react-firebase-hooks/auth';
 import { Center, Spinner, useToast } from '@chakra-ui/react';
 import { auth } from '../firebase/client';
-import SignIn from '../components/SignIn';
+import LoginForm from '../components/LoginForm';
 import Header from '../components/Header';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -99,7 +99,7 @@ export default function Login() {
             <>
                 <Header />
                 <Center p={3}>
-                    <SignIn 
+                    <LoginForm 
                         email={email}
                         handleChangeEmail={handleChangeEmail}
                         password={password}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, Divider, Tooltip, Text, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link';
 
-export default function SignIn(props) {
+export default function LoginForm(props) {
     const [show, setShow] = useState(false);
     const toggleShowPassword = () => setShow(!show);
 
