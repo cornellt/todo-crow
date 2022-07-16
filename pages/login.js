@@ -57,7 +57,7 @@ export default function Login() {
             push('/');
     }}, [userAuthState, push, user]);
 
-    //registration error toast
+    //login toast
     const toast = useToast();
 
     //redirect to '/' with Toast popup after successful login

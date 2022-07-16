@@ -1,20 +1,33 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/client';
-import { Image, Heading, Flex, Spacer, Button } from '@chakra-ui/react'
+import { Image, Heading, Flex, Spacer, Button, useToast, propNames } from '@chakra-ui/react'
 
 
 export default function Header() {
     const [user] = useAuthState(auth);
 
+    const toast = useToast();
+
     const signUserOut = () => {
-        signOut(auth);
+        signOut(auth)
+        .then(() => {
+            toast({
+                title: 'Logged Out',
+                status: 'info',
+                duration: 4000,
+                isClosable: true,
+                position: 'top'
+                });
+        });
+
+
     };
 
     return(      
-        <Flex background='blue.600'>
+        <Flex background='purple.400'>
             <Image
-                boxSize='4rem'
+                boxSize='3rem'
                 objectFit='cover'
                 src='crow.png'
                 alt='todo-crow'
