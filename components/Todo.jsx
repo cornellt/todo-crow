@@ -1,4 +1,4 @@
-import { Checkbox, Box, Text, Button, IconButton } from '@chakra-ui/react'
+import { Checkbox, Box, Text, IconButton } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
 
 export default function Todo(props) {
