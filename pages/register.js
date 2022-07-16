@@ -70,7 +70,7 @@ export default function Register() {
             push('/');
     }}, [userAuthState, push, user]);
 
-    //registration error toast
+    //registration toast
     const toast = useToast();
 
     useEffect(() => {
@@ -81,7 +81,7 @@ export default function Register() {
                 title: 'Registration Successful',
                 description: `You've been logged in automatically.`,
                 status: 'success',
-                duration: 6000,
+                duration: 4000,
                 isClosable: true,
                 position: 'top'
                 });
@@ -96,7 +96,7 @@ export default function Register() {
                 title: 'Error',
                 description: (error.code === 'auth/email-already-in-use' ? 'Email already in use.' : 'Account creation failed.'),
                 status: 'error',
-                duration: 6000,
+                duration: 4000,
                 isClosable: true,
                 position: 'top'
             });

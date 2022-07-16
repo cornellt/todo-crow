@@ -75,7 +75,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header/>
       <Center p={3}>
         {user && !loading &&
           <VStack align='end'>

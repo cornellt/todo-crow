@@ -10,8 +10,8 @@ export default function RegisterForm(props) {
   const [showPasswords, setShowPasswords] = useState(false);
   const toggleShowPasswords = () => setShowPasswords(!showPasswords);
 
-  const submitForm = (e) => {
-    e.preventDefault();
+  const submitForm = (event) => {
+    event.preventDefault();
     if (props.registrationValid) {
       props.handleSignUpForm();
     }

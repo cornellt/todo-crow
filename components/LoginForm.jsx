@@ -6,8 +6,8 @@ export default function LoginForm(props) {
     const [show, setShow] = useState(false);
     const toggleShowPassword = () => setShow(!show);
 
-    const submitForm = (e) => {
-        e.preventDefault();
+    const submitForm = (event) => {
+        event.preventDefault();
         if (props.signInValid) {
             props.handleSignInForm();
         }
@@ -29,6 +29,8 @@ export default function LoginForm(props) {
                         placeholder='Enter email'
                         borderColor='gray.300'
                         backgroundColor='gray.100'
+                        type='email'
+                        name='username'
                     />
                 </form>
                 <form onSubmit={submitForm}>
