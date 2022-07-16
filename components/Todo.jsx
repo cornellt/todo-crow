@@ -7,7 +7,7 @@ export default function Todo(props) {
   return(
     <Box display='flex'>
       <Text my='auto'>{props.data.title}</Text>
-      <Button mx='3'>Delete</Button>
+      <Button mx='3' colorScheme={'red'}>Delete</Button>
     </Box>)
 
 }

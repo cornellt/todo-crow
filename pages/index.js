@@ -77,7 +77,7 @@ export default function Home() {
             <form onSubmit={addNewTodo}>
               <Box display='flex'>
                 <Input onChange={changeTodoInput} value={todoInput} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
-                <Button mx='3'>Add Todo</Button>
+                <Button mx='3' colorScheme={'green'}>Add Todo</Button>
               </Box>
             </form>
             <Divider/>
