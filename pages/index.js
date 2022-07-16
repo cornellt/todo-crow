@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { Center, Spinner, Input, VStack, Box, Divider, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { auth, app } from '../firebase/client';
@@ -42,7 +42,7 @@ export default function Home() {
 
   //redirect to login if user is not authenticated or loading
   useEffect(() => {
-    if (!(user || loading)) {
+    if(!(user || loading)) {
       push('login');
     }
   }, [user, loading, push]);
@@ -55,9 +55,10 @@ export default function Home() {
       await addDoc(collection(db, 'todos'), {
         uid: user.uid,
         title: todoInput,
-        completed: false
+        completed: false,
+        createdAt: serverTimestamp()
       });
-    } catch (error) {
+    } catch(error) {
       console.log(error)
     }
 
