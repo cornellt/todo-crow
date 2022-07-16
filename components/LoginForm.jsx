@@ -29,8 +29,6 @@ export default function LoginForm(props) {
                         placeholder='Enter email'
                         borderColor='gray.300'
                         backgroundColor='gray.100'
-                        type='email'
-                        name='username'
                     />
                 </form>
                 <form onSubmit={submitForm}>
@@ -43,6 +41,8 @@ export default function LoginForm(props) {
                             placeholder='Enter password'
                             borderColor='gray.300'
                             backgroundColor='gray.100'
+                            id='email'
+                            autoComplete='email'
                         />
                         <InputRightElement width='4.5rem'>
                             <Button
