@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { collection, addDoc, query, where, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 
 import { Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons'
+
 
 
 export default function Home() {
@@ -94,7 +96,7 @@ export default function Home() {
             <form onSubmit={addNewTodo}>
               <Box display='flex'>
                 <Input onChange={changeTodoInput} value={todoInput} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
-                <Button mx='3' colorScheme={'green'}>Add Todo</Button>
+                <Button mx='3' colorScheme={'green'}><AddIcon/></Button>
               </Box>
             </form>
             <Divider/>
