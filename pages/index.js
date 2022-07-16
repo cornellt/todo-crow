@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 import { collection, addDoc, query, where, onSnapshot } from "firebase/firestore";
 
-import { Input, Text, VStack} from '@chakra-ui/react';
+import { Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
 
 
 export default function Home() {
@@ -72,15 +72,19 @@ export default function Home() {
     <>
       <Header />
       <Center p={3}>
-        {user && !loading && 
-          <VStack>
+        {user && !loading &&
+          <VStack align='end'>
             <form onSubmit={addNewTodo}>
-              <Input onChange={changeTodoInput} value={todoInput} w={'50vw'} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
+              <Box display='flex'>
+                <Input onChange={changeTodoInput} value={todoInput} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
+                <Button mx='3'>Add Todo</Button>
+              </Box>
             </form>
+            <Divider/>
               {todoList.map((item, index) =>
                 <Todo key={index} data={item}/>
               )}
-            </VStack>
+          </VStack>
         }
         {loading && <Spinner size='xl' />}
       </Center>
