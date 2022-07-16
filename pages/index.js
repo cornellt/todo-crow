@@ -68,16 +68,12 @@ export default function Home() {
 
   };
 
-  const deleteTodo = async (event) => {
-    event.preventDefault();
-    console.log(`item to delete: `)
-    console.log(event.target)
-    const documentId = event.target.id;
+  const deleteTodo = async (todoId) => {
     
-    console.log(`deleting ${documentId}...`)
-    if(documentId) {
+    console.log(`deleting ${todoId}...`)
+    if(todoId) {
       try {
-        await deleteDoc(doc(db, 'todos', documentId));
+        await deleteDoc(doc(db, 'todos', todoId));
         console.log(`done deleting`)
       } catch(e) {
         console.log(e);
