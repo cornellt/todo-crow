@@ -22,32 +22,35 @@ export default function Register() {
     //State for register form
     const [email, setEmail] = useState('');
     const handleChangeEmail = (event) => {
-        setEmail(event.target.value);
+        const currentValue = event.target.value;
+        setEmail(currentValue);
+        setEmailValid(EmailValidator.validate(currentValue));
     }
-    useEffect(() => {
-        setEmailValid(EmailValidator.validate(email));
-    }, [email]);
 
     const [password, setPassword] = useState('');
     const handleChangePassword = (event) => {
-        setPassword(event.target.value);
-    };
+        const currentValue = event.target.value;
+        setPassword(currentValue);
+        setPasswordLongEnough(currentValue.length >= 6);
+    }
 
     const [confirmPassword, setConfirmPassword] = useState('');
     const handleChangeConfirmPassword = (event) => {
         setConfirmPassword(event.target.value);
     };
+
+    //If either password or confirmPassword change, check if they match and update passwordsMatch variable
     useEffect(() => {
-        setPasswordLongEnough(password.length >= 6);
         setPasswordsMatch(password === confirmPassword);
     }, [password, confirmPassword]);
-
 
     //Checks before registration sent
     const [emailValid, setEmailValid] = useState(false);
     const [passwordLongEnough, setPasswordLongEnough] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [registrationValid, setRegistrationValid] = useState(false);
+    const [registrationValid, setRegistrationValid] = useState(emailValid && passwordLongEnough && passwordsMatch);
+
+    //emailValid, passwordsMatch, and passwordLongEnough are the 3 requirements for valid Registration. If any of these variables change, update registrationValid accordingly
     useEffect(() => {
         setRegistrationValid(emailValid && passwordsMatch && passwordLongEnough);
     }, [emailValid, passwordsMatch, passwordLongEnough]);
@@ -70,8 +73,8 @@ export default function Register() {
     //registration error toast
     const toast = useToast();
 
-    //redirect to '/' with Toast popup upon successful registration
     useEffect(() => {
+        //redirect to '/' with Toast popup upon successful registration
         if (!error && user) {
             // Signed in
             toast({
@@ -85,9 +88,8 @@ export default function Register() {
 
             push('/');
         }
-    }, [user, error, push, toast])
 
-    useEffect(() => {
+        //Toast for Registration error
         if (error) {
             console.log(error);
             toast({
@@ -99,7 +101,7 @@ export default function Register() {
                 position: 'top'
             });
         }
-    }, [error, toast]);
+    }, [user, error, push, toast])
 
     return (
         <>

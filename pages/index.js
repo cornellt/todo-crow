@@ -5,12 +5,12 @@ import { Center, Spinner } from '@chakra-ui/react';
 import { auth, app } from '../firebase/client';
 import { useAuthState } from "react-firebase-hooks/auth";
 import Header from '../components/Header';
-//import Todo from '../components/Todo';
+import Todo from '../components/Todo';
 import { useState } from 'react';
 
 import { collection, addDoc, query, where, onSnapshot } from "firebase/firestore";
 
-import { Input, Text, VStack} from '@chakra-ui/react';
+import { Input, Button, VStack, Box, Divider } from '@chakra-ui/react';
 
 
 export default function Home() {
@@ -42,7 +42,7 @@ export default function Home() {
         setTodoList(todos);
       }));
     }
-  }, [user]);
+  }, [user, db]);
 
   //redirect to login if user is not authenticated or loading
   useEffect(() => {
@@ -50,13 +50,6 @@ export default function Home() {
       push('login');
     }
   }, [user, loading, push]);
-
-  //cleanup upon deletion
-  useEffect(() => {
-    return(() => {
-      unsubscribe && unsubscribe() && console.log('unsubbed!');
-    })
-  }, [])
 
   const addNewTodo = async (e) => {
     e.preventDefault();
@@ -79,15 +72,19 @@ export default function Home() {
     <>
       <Header />
       <Center p={3}>
-        {user && !loading && 
-          <VStack>
+        {user && !loading &&
+          <VStack align='end'>
             <form onSubmit={addNewTodo}>
-              <Input onChange={changeTodoInput} value={todoInput} w={'50vw'} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
+              <Box display='flex'>
+                <Input onChange={changeTodoInput} value={todoInput} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item'/>
+                <Button mx='3' colorScheme={'green'}>Add Todo</Button>
+              </Box>
             </form>
+            <Divider/>
               {todoList.map((item, index) =>
-                <Text key={index}>{item.title}</Text>
+                <Todo key={index} data={item}/>
               )}
-            </VStack>
+          </VStack>
         }
         {loading && <Spinner size='xl' />}
       </Center>
