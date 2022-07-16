@@ -4,7 +4,7 @@ import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, 
 import { Center, Spinner, Input, VStack, Box, Divider, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { auth, app } from '../firebase/client';
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
 import Header from '../components/Header';
 import Todo from '../components/Todo';
 import { useState } from 'react';
