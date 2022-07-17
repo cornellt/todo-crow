@@ -97,11 +97,11 @@ export default function Home() {
               </Box>
             </form>
             <Divider/>
-              {todoList.filter(todo => !todo.completed).map(filteredTodo => 
-                  <Todo key={filteredTodo.id} data={filteredTodo} delete={deleteTodo} toggle={toggleTodo} />
+              {todoList.filter(todo => !todo.completed).map(incompleteTodo => 
+                  <Todo key={incompleteTodo.id} data={incompleteTodo} delete={deleteTodo} toggle={toggleTodo} />
               )}
-              {todoList.filter(todo => todo.completed).map(filteredTodo => 
-                  <Todo key={filteredTodo.id} data={filteredTodo} delete={deleteTodo} toggle={toggleTodo} />
+              {todoList.filter(todo => todo.completed).map(completeTodo => 
+                  <Todo key={completeTodo.id} data={completeTodo} delete={deleteTodo} toggle={toggleTodo} />
               )}
           </VStack>
         }
