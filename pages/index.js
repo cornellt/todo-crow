@@ -12,14 +12,12 @@ export default function Home() {
     // User Authentication
     const [user, loading] = useAuthState(auth);
 
-    //redirect to login if user is not authenticated or loading
+    //redirect to /login if user is not authenticated or is loading
     useEffect(() => {
         if (!(user || loading)) {
             push('login');
         }
     }, [user, loading, push]);
-
-
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Link, Box } from '@chakra-ui/react'
 import '../styles.css'
 import Head from 'next/head'
 
@@ -16,7 +16,9 @@ function MyApp({ Component, pageProps }) {
                 <meta name='author' content='Thomas Cornell' />
             </Head>
             <Component {...pageProps} />
-            <a href='https://www.flaticon.com/free-icons/crow' title='crow icon' className='footer'>Crow icon created by Maximka - Flaticon</a>
+            <Box className='footer'>
+                <Link href='https://www.flaticon.com/free-icons/crow' title='crow icon' >Crow icon created by Maximka - Flaticon</Link>
+            </Box>
         </ChakraProvider>
     )
 }

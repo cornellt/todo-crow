@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 
 
-export default function TodoList(props) {
+export default function TodoList() {
     const db = getFirestore(app);
 
     // User Authentication
@@ -38,7 +38,7 @@ export default function TodoList(props) {
         }
     }, [user, db]);
 
-    const addNewTodo = async (event) => {
+    const addTodo = async (event) => {
         event.preventDefault();
         setTodoInput('');
 
@@ -77,10 +77,10 @@ export default function TodoList(props) {
 
     return (
         <VStack align='end'>
-            <form onSubmit={addNewTodo}>
+            <form onSubmit={addTodo}>
                 <Box display='flex'>
                     <Input onChange={changeTodoInput} value={todoInput} borderColor='gray.300' backgroundColor='gray.100' placeholder='New Todo Item' />
-                    <IconButton mx='3' aria-label='Add todo' colorScheme='green' onClick={addNewTodo} icon={<AddIcon />} />
+                    <IconButton mx='3' aria-label='Add todo' colorScheme='green' onClick={addTodo} icon={<AddIcon />} />
                 </Box>
             </form>
             <Divider />
