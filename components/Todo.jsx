@@ -1,4 +1,4 @@
-import { Checkbox, Box, Text, IconButton, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, useDisclosure } from '@chakra-ui/react'
+import { Checkbox, Box, Text, IconButton, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, useDisclosure, useToast } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { useRef, useState } from 'react';
 
@@ -8,8 +8,23 @@ export default function Todo(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const handleDelete = () => {
+  const toast = useToast();
+
+  const openDeleteDialog = () => {
     onOpen();
+  }
+
+  const handleDelete = () => {
+    onClose();
+    props.delete(props.data.id);
+
+    toast({
+      title: `"${props.data.title}" todo deleted!`,
+      status: 'info',
+      duration: 2000,
+      isClosable: true,
+      position: 'top'
+  });
   }
 
   const toggleTodoStatus = () => {
@@ -21,7 +36,7 @@ export default function Todo(props) {
     <Box display='flex'>
       <Text my='auto' as={isCompleted ? 's' : ''}>{props.data.title}</Text>
       <Checkbox ml='3' onChange={toggleTodoStatus} isChecked={isCompleted}></Checkbox>
-      <IconButton mx='3' aria-label='Delete todo' colorScheme={'red'} onClick={handleDelete} icon={<DeleteIcon />} />
+      <IconButton mx='3' aria-label='Delete todo' colorScheme={'red'} onClick={openDeleteDialog} icon={<DeleteIcon />} />
 
       <AlertDialog
         isOpen={isOpen}
@@ -43,8 +58,7 @@ export default function Todo(props) {
                 Cancel
               </Button>
               <Button colorScheme='red' onClick={() => {
-                onClose();
-                props.delete(props.data.id);
+                handleDelete();
               }} ml={3}>
                 Delete
               </Button>
