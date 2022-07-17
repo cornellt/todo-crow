@@ -55,14 +55,10 @@ export default function LoginForm(props) {
                         </InputRightElement>
                     </InputGroup>
                 </form>
-                    {!props.signInValid &&
+                    {props.signInValid ? <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button> :
                         <Tooltip hasArrow label={!props.emailValid ? 'Enter a valid email!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
                             <Button align='stretch' width='100%' onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
-                        </Tooltip>
-                    }
-                    {props.signInValid &&
-                        <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button>
-                    }
+                        </Tooltip>}
                 <Text align='center'>
                     Need an account? <Link href='/register' passHref><ChakraLink color='blue.600'>Register</ChakraLink></Link>.
                 </Text>

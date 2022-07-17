@@ -66,7 +66,7 @@ export default function Login() {
             toast({
                 title: 'Login Successful',
                 status: 'success',
-                duration: 6000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top'
               });
@@ -81,7 +81,7 @@ export default function Login() {
                 title: 'Login Unsuccessful',
                 description: 'Email or Password is incorrect!',
                 status: 'error',
-                duration: 6000,
+                duration: 4000,
                 isClosable: true,
                 position: 'top'
             });
