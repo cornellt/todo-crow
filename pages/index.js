@@ -25,8 +25,8 @@ export default function Home() {
 
   //update Firestore Database listener when 'user' changes and user.uid exists
   useEffect(() => {
-    if(!user) return
-    if(user.uid) {
+    if(!user || !db) return
+    if(user.uid && db) {
       const q = query(collection(db, 'todos'), where('uid', '==', user.uid));
       onSnapshot(q, (querySnapshot) => {
         const todos = querySnapshot.docs.map(doc => {
@@ -88,7 +88,7 @@ export default function Home() {
     <>
       <Header/>
       <Center p={3}>
-        {user && !loading &&
+        {user && todoList &&
           <VStack align='end'>
             <form onSubmit={addNewTodo}>
               <Box display='flex'>
@@ -97,8 +97,11 @@ export default function Home() {
               </Box>
             </form>
             <Divider/>
-              {todoList.map((item, index) =>
-                <Todo key={index} data={item} delete={deleteTodo} toggle={toggleTodo} />
+              {todoList.filter(todo => !todo.completed).map(incompleteTodo => 
+                  <Todo key={incompleteTodo.id} data={incompleteTodo} delete={deleteTodo} toggle={toggleTodo} />
+              )}
+              {todoList.filter(todo => todo.completed).map(completeTodo => 
+                  <Todo key={completeTodo.id} data={completeTodo} delete={deleteTodo} toggle={toggleTodo} />
               )}
           </VStack>
         }

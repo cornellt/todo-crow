@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>todo crow</title>
         <meta property='og:title' content='todo crow' key='title' />
-        <meta charset='UTF-8' />
+        <meta charSet='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <meta name='description' content='A simple todo app' />
         <meta name='keywords' content='Todo, productivitiy' />
