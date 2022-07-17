@@ -84,21 +84,11 @@ export default function Home() {
     }
   }
 
-
-
-  const filterCompletedTodos = (todo) => {
-    if(todo.completed) {
-      return <Todo key={index} data={item} delete={deleteTodo} toggle={toggleTodo} />
-    } else {
-      return;
-    }
-  }
-
   return (
     <>
       <Header/>
       <Center p={3}>
-        {user && !loading &&
+        {user && todoList &&
           <VStack align='end'>
             <form onSubmit={addNewTodo}>
               <Box display='flex'>
