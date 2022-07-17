@@ -15,7 +15,7 @@ export default function Header() {
             toast({
                 title: 'Logged Out',
                 status: 'info',
-                duration: 4000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top'
                 });
