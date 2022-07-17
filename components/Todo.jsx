@@ -19,7 +19,7 @@ export default function Todo(props) {
 
   return(
     <Box display='flex'>
-      <Text my='auto'>{props.data.title}</Text>
+      <Text my='auto' as={isCompleted ? 's' : ''}>{props.data.title}</Text>
       <Checkbox ml='3' onChange={toggleTodoStatus} isChecked={isCompleted}></Checkbox>
       <IconButton mx='3' aria-label='Delete todo' colorScheme={'red'} onClick={handleDelete} icon={<DeleteIcon />} />
 

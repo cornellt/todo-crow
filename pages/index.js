@@ -84,6 +84,16 @@ export default function Home() {
     }
   }
 
+
+
+  const filterCompletedTodos = (todo) => {
+    if(todo.completed) {
+      return <Todo key={index} data={item} delete={deleteTodo} toggle={toggleTodo} />
+    } else {
+      return;
+    }
+  }
+
   return (
     <>
       <Header/>
@@ -97,8 +107,11 @@ export default function Home() {
               </Box>
             </form>
             <Divider/>
-              {todoList.map((item, index) =>
-                <Todo key={index} data={item} delete={deleteTodo} toggle={toggleTodo} />
+              {todoList.filter(todo => !todo.completed).map(filteredTodo => 
+                  <Todo key={filteredTodo.id} data={filteredTodo} delete={deleteTodo} toggle={toggleTodo} />
+              )}
+              {todoList.filter(todo => todo.completed).map(filteredTodo => 
+                  <Todo key={filteredTodo.id} data={filteredTodo} delete={deleteTodo} toggle={toggleTodo} />
               )}
           </VStack>
         }
