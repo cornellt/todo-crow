@@ -25,8 +25,8 @@ export default function Home() {
 
   //update Firestore Database listener when 'user' changes and user.uid exists
   useEffect(() => {
-    if(!user) return
-    if(user.uid) {
+    if(!user || !db) return
+    if(user.uid && db) {
       const q = query(collection(db, 'todos'), where('uid', '==', user.uid));
       onSnapshot(q, (querySnapshot) => {
         const todos = querySnapshot.docs.map(doc => {
