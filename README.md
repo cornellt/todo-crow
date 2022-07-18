@@ -4,6 +4,7 @@
 Implemented and deployed using:
 - Next.js
 - Vercel
+- TypeScript
 - Chakra UI
 - Firebase
 
