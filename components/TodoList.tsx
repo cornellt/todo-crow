@@ -1,12 +1,18 @@
 import { Input, VStack, Box, Divider, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import Todo from '../components/Todo';
-import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import Todo from './Todo';
+import { FieldValue, getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { app, auth } from '../firebase/client';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent, MouseEvent } from 'react';
 
-
+export interface Todo {
+    id: string;
+    completed: boolean;
+    createdAt: FieldValue;
+    uid: string;
+    title: string;
+};
 
 export default function TodoList() {
     const db = getFirestore(app);
@@ -15,10 +21,10 @@ export default function TodoList() {
     const [user] = useAuthState(auth);
 
     //todo state
-    const [todoList, setTodoList] = useState([]);
+    const [todoList, setTodoList] = useState<Todo[]>([]);
     const [todoInput, setTodoInput] = useState('');
-    const changeTodoInput = (event) => {
-        setTodoInput(event.target.value);
+    const changeTodoInput = (event: FormEvent<HTMLInputElement>) => {
+        setTodoInput(event.currentTarget.value);
     };
 
     //update Firestore Database listener when 'user' changes and user.uid exists
@@ -29,8 +35,9 @@ export default function TodoList() {
             onSnapshot(q, (querySnapshot) => {
                 const todos = querySnapshot.docs.map(doc => {
                     const id = doc.id;
-                    const data = doc.data();
-                    return { id, ...data };
+                    const { completed, createdAt, uid, title } = doc.data()
+                    
+                    return { id, title, completed, createdAt, uid };
                 });
 
                 setTodoList(todos);
@@ -38,14 +45,15 @@ export default function TodoList() {
         }
     }, [user, db]);
 
-    const addTodo = async (event) => {
+    const addTodo = async (event: MouseEvent | FormEvent) => {
         event.preventDefault();
+        const input = todoInput;
         setTodoInput('');
 
         try {
             await addDoc(collection(db, 'todos'), {
-                uid: user.uid,
-                title: todoInput,
+                uid: user?.uid,
+                title: input,
                 completed: false,
                 createdAt: serverTimestamp()
             });
@@ -55,7 +63,7 @@ export default function TodoList() {
 
     };
 
-    const deleteTodo = async (todoId) => {
+    const deleteTodo = async (todoId: string) => {
         try {
             await deleteDoc(doc(db, 'todos', todoId));
         } catch (error) {
@@ -63,7 +71,7 @@ export default function TodoList() {
         }
     }
 
-    const toggleTodo = async (todoId, currentValue) => {
+    const toggleTodo = async (todoId: string, currentValue: boolean) => {
         try {
             await setDoc(doc(db, 'todos', todoId), { completed: !currentValue }, { merge: true });
         } catch (error) {

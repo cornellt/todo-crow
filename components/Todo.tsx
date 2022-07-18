@@ -1,12 +1,20 @@
 import { Checkbox, Box, Text, IconButton, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, useDisclosure, useToast } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { useRef, useState } from 'react';
+import { Todo } from './TodoList';
 
-export default function Todo(props) {
+interface TodoProps {
+    key: string;
+    data: Todo;
+    delete: (todoId: string) => void;
+    toggle: (todoId: string, currentValue: boolean) => void;
+};
+
+export default function Todo(props: TodoProps) {
     const [isCompleted, setIsCompleted] = useState(props.data.completed);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const cancelRef = useRef();
+    const cancelRef = useRef(null);
 
     const toast = useToast();
 
@@ -34,7 +42,7 @@ export default function Todo(props) {
 
     return (
         <Box display='flex'>
-            <Text my='auto' as={isCompleted ? 's' : ''}>{props.data.title}</Text>
+            <Text my='auto' as={isCompleted ? 's' : undefined }>{props.data.title}</Text>
             <Checkbox ml='3' onChange={toggleTodoStatus} isChecked={isCompleted}></Checkbox>
             <IconButton mx='3' aria-label='Delete todo' colorScheme={'red'} onClick={openDeleteDialog} icon={<DeleteIcon />} />
 

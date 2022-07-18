@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, Divider, Tooltip, Text, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link';
 
-export default function LoginForm(props) {
+interface LoginFormProps  {
+    email: string;
+    handleChangeEmail: () => void;
+    password: string;
+    handleChangePassword: () => void;
+    handleSignInForm: () => void;
+    emailValid: boolean;
+    passwordLongEnough: boolean;
+    signInValid: boolean;
+};
+
+export default function LoginForm(props: LoginFormProps) {
     const [show, setShow] = useState(false);
     const toggleShowPassword = () => setShow(!show);
 
-    const submitForm = (event) => {
+    const submitForm = (event: FormEvent) => {
         event.preventDefault();
         if (props.signInValid) {
             props.handleSignInForm();
@@ -57,7 +68,7 @@ export default function LoginForm(props) {
                 </form>
                     {props.signInValid ? <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button> :
                         <Tooltip hasArrow label={!props.emailValid ? 'Enter a valid email!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
-                            <Button align='stretch' width='100%' onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
+                            <Button width='100%' onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
                         </Tooltip>}
                 <Text align='center'>
                     Need an account? <Link href='/register' passHref><ChakraLink color='blue.600'>Register</ChakraLink></Link>.

@@ -127,7 +127,6 @@ export default function Register() {
                             passwordsMatch={passwordsMatch}
                             registrationValid={registrationValid}
                             handleSignUpForm={handleSignUpForm}
-                            error={error}
                         />
                     </Center>
                 </>

@@ -1,8 +1,22 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { Center, Heading, Text, Input, InputGroup, Button, InputRightElement, VStack, Alert, AlertIcon, Divider, Link as ChakraLink } from '@chakra-ui/react';
 
-export default function RegisterForm(props) {
+interface RegisterFormProps  {
+    email: string;
+    handleChangeEmail: () => void;
+    emailValid: boolean;
+    password: string;
+    handleChangePassword: () => void;
+    passwordLongEnough: boolean;
+    confirmPassword: string;
+    handleChangeConfirmPassword: () => void;
+    passwordsMatch: boolean;
+    registrationValid: boolean;
+    handleSignUpForm: () => void;
+};
+
+export default function RegisterForm(props: RegisterFormProps) {
     const [emailBlurred, setEmailBlurred] = useState(false);
     const [passwordBlurred, setPasswordBlurred] = useState(false);
     const [confirmPasswordBlurred, setConfirmPasswordBlurred] = useState(false);
@@ -10,7 +24,7 @@ export default function RegisterForm(props) {
     const [showPasswords, setShowPasswords] = useState(false);
     const toggleShowPasswords = () => setShowPasswords(!showPasswords);
 
-    const submitForm = (event) => {
+    const submitForm = (event: FormEvent) => {
         event.preventDefault();
         if (props.registrationValid) {
             props.handleSignUpForm();
@@ -71,7 +85,7 @@ export default function RegisterForm(props) {
                                     h='1.75rem'
                                     size='sm'
                                     onClick={toggleShowPasswords}
-                                    tabIndex='-1'
+                                    tabIndex={-1}
                                 >
                                     {showPasswords ? 'Hide' : 'Show'}
                                 </Button>
@@ -96,7 +110,7 @@ export default function RegisterForm(props) {
                                     h='1.75rem'
                                     size='sm'
                                     onClick={toggleShowPasswords}
-                                    tabIndex='-1'
+                                    tabIndex={-1}
                                 >
                                     {showPasswords ? 'Hide' : 'Show'}
                                 </Button>
