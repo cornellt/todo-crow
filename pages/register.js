@@ -55,6 +55,7 @@ export default function Register() {
         setRegistrationValid(emailValid && passwordsMatch && passwordLongEnough);
     }, [emailValid, passwordsMatch, passwordLongEnough]);
 
+    //create user in Firebase if registration is valid
     const handleSignUpForm = () => {
         if (registrationValid) {
             createUserWithEmailAndPassword(email, password);
