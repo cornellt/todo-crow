@@ -3,7 +3,7 @@ import { useCreateUserWithEmailAndPassword, useAuthState } from 'react-firebase-
 import { auth } from '../firebase/client';
 import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import * as EmailValidator from 'email-validator';
 import { useRouter } from 'next/router';
 
@@ -21,22 +21,22 @@ export default function Register() {
 
     //State for register form
     const [email, setEmail] = useState('');
-    const handleChangeEmail = (event) => {
-        const currentValue = event.target.value;
+    const handleChangeEmail = (event: FormEvent<HTMLInputElement>) => {
+        const currentValue = event.currentTarget.value;
         setEmail(currentValue);
         setEmailValid(EmailValidator.validate(currentValue));
     }
 
     const [password, setPassword] = useState('');
-    const handleChangePassword = (event) => {
-        const currentValue = event.target.value;
+    const handleChangePassword = (event: FormEvent<HTMLInputElement>) => {
+        const currentValue = event.currentTarget.value;
         setPassword(currentValue);
         setPasswordLongEnough(currentValue.length >= 6);
     }
 
     const [confirmPassword, setConfirmPassword] = useState('');
-    const handleChangeConfirmPassword = (event) => {
-        setConfirmPassword(event.target.value);
+    const handleChangeConfirmPassword = (event: FormEvent<HTMLInputElement>) => {
+        setConfirmPassword(event.currentTarget.value);
     };
 
     //If either password or confirmPassword change, check if they match and update passwordsMatch variable

@@ -1,9 +1,10 @@
 import { ChakraProvider, Link, Box } from '@chakra-ui/react'
 import '../styles.css'
 import Head from 'next/head'
+import { AppProps } from 'next/app';
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
     return (
         <ChakraProvider>
             <Head>

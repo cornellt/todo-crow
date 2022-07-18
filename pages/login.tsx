@@ -4,7 +4,7 @@ import { auth } from '../firebase/client';
 import LoginForm from '../components/LoginForm';
 import Header from '../components/Header';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import * as EmailValidator from 'email-validator';
 
 export default function Login() {
@@ -20,15 +20,15 @@ export default function Login() {
     const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
     const [email, setEmail] = useState('');
-    const handleChangeEmail = (event) => {
-        const currentValue = event.target.value;
+    const handleChangeEmail = (event: FormEvent<HTMLInputElement>) => {
+        const currentValue = event.currentTarget.value;
         setEmail(currentValue);
         setEmailValid(EmailValidator.validate(currentValue));
     }
 
     const [password, setPassword] = useState('');
-    const handleChangePassword = (event) => {
-        const currentValue = event.target.value;
+    const handleChangePassword = (event: FormEvent<HTMLInputElement>) => {
+        const currentValue = event.currentTarget.value;
         setPassword(currentValue);
         setPasswordLongEnough(currentValue.length >= 6);
     }
