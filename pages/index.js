@@ -27,5 +27,5 @@ export default function Home() {
                 {loading && <Spinner size='xl' /> }
             </Center>
         </>
-    )
+    );
 }

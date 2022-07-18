@@ -12,7 +12,7 @@ export default function Todo(props) {
 
     const openDeleteDialog = () => {
         onOpen();
-    }
+    };
 
     const handleDelete = () => {
         onClose();
@@ -25,12 +25,12 @@ export default function Todo(props) {
             isClosable: true,
             position: 'top'
         });
-    }
+    };
 
     const toggleTodoStatus = () => {
         props.toggle(props.data.id, props.data.completed);
         setIsCompleted(!isCompleted);
-    }
+    };
 
     return (
         <Box display='flex'>
@@ -66,6 +66,6 @@ export default function Todo(props) {
                     </AlertDialogContent>
                 </AlertDialogOverlay>
             </AlertDialog>
-        </Box>)
+        </Box>);
 
 }
