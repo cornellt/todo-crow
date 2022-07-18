@@ -20,7 +20,7 @@ export default function TodoList() {
     const changeTodoInput = (event) => {
         setTodoInput(event.target.value);
     };
-    
+
     //update Firestore Database listener when 'user' changes and user.uid exists
     useEffect(() => {
         if (!user || !db) return
@@ -56,22 +56,18 @@ export default function TodoList() {
     };
 
     const deleteTodo = async (todoId) => {
-        if (todoId) {
-            try {
-                await deleteDoc(doc(db, 'todos', todoId));
-            } catch (error) {
-                console.log(error);
-            }
+        try {
+            await deleteDoc(doc(db, 'todos', todoId));
+        } catch (error) {
+            console.log(error);
         }
     }
 
     const toggleTodo = async (todoId, currentValue) => {
-        if (todoId) {
-            try {
-                await setDoc(doc(db, 'todos', todoId), { completed: !currentValue }, { merge: true });
-            } catch (error) {
-                console.log(error);
-            }
+        try {
+            await setDoc(doc(db, 'todos', todoId), { completed: !currentValue }, { merge: true });
+        } catch (error) {
+            console.log(error);
         }
     }
 

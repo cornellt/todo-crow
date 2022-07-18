@@ -1,7 +1,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/client';
-import { Image, Heading, Flex, Spacer, Button, useToast, propNames } from '@chakra-ui/react'
+import { Image, Heading, Flex, Spacer, Button, useToast } from '@chakra-ui/react'
 
 
 export default function Header() {
@@ -20,8 +20,6 @@ export default function Header() {
                 position: 'top'
                 });
         });
-
-
     };
 
     return(      
@@ -29,7 +27,7 @@ export default function Header() {
             <Image
                 boxSize='3rem'
                 objectFit='cover'
-                src='crow.png'
+                src='/crow.png'
                 alt='todo-crow'
                 m='1'
             />
