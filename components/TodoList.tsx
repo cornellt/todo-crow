@@ -1,18 +1,10 @@
 import { Input, VStack, Box, Divider, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import Todo from './Todo';
-import { FieldValue, getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, query, where, onSnapshot, deleteDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { app, auth } from '../firebase/client';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useEffect, useState, FormEvent, MouseEvent } from 'react';
-
-export interface Todo {
-    id: string;
-    completed: boolean;
-    createdAt: FieldValue;
-    uid: string;
-    title: string;
-};
 
 export default function TodoList() {
     const db = getFirestore(app);

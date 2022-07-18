@@ -1,14 +1,6 @@
 import { Checkbox, Box, Text, IconButton, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, Button, useDisclosure, useToast } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import { useRef, useState } from 'react';
-import { Todo } from './TodoList';
-
-interface TodoProps {
-    key: string;
-    data: Todo;
-    delete: (todoId: string) => void;
-    toggle: (todoId: string, currentValue: boolean) => void;
-};
 
 export default function Todo(props: TodoProps) {
     const [isCompleted, setIsCompleted] = useState(props.data.completed);

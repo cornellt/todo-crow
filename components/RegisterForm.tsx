@@ -2,20 +2,6 @@ import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { Center, Heading, Text, Input, InputGroup, Button, InputRightElement, VStack, Alert, AlertIcon, Divider, Link as ChakraLink } from '@chakra-ui/react';
 
-interface RegisterFormProps  {
-    email: string;
-    handleChangeEmail: () => void;
-    emailValid: boolean;
-    password: string;
-    handleChangePassword: () => void;
-    passwordLongEnough: boolean;
-    confirmPassword: string;
-    handleChangeConfirmPassword: () => void;
-    passwordsMatch: boolean;
-    registrationValid: boolean;
-    handleSignUpForm: () => void;
-};
-
 export default function RegisterForm(props: RegisterFormProps) {
     const [emailBlurred, setEmailBlurred] = useState(false);
     const [passwordBlurred, setPasswordBlurred] = useState(false);
