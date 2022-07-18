@@ -24,14 +24,14 @@ export default function Login() {
         const currentValue = event.currentTarget.value;
         setEmail(currentValue);
         setEmailValid(EmailValidator.validate(currentValue));
-    }
+    };
 
     const [password, setPassword] = useState('');
     const handleChangePassword = (event: FormEvent<HTMLInputElement>) => {
         const currentValue = event.currentTarget.value;
         setPassword(currentValue);
         setPasswordLongEnough(currentValue.length >= 6);
-    }
+    };
 
     //Checks before login button is enabled
     const [emailValid, setEmailValid] = useState(false);
@@ -72,7 +72,7 @@ export default function Login() {
               });
             push('/');
         }
-    }, [user, error, push, toast])
+    }, [user, error, push, toast]);
 
     //show an Error toast if the login fails because of an incorrect email/password
     useEffect(() => {
@@ -112,5 +112,5 @@ export default function Login() {
                 </Center>
             </>
         }
-    </>)
+    </>);
 }

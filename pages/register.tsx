@@ -63,7 +63,7 @@ export default function Register() {
         else {
             console.log('Registration invalid!');
         }
-    }
+    };
 
     //redirect to '/' if user is already logged in
     useEffect(() => {
@@ -102,7 +102,7 @@ export default function Register() {
                 position: 'top'
             });
         }
-    }, [user, error, push, toast])
+    }, [user, error, push, toast]);
 
     return (
         <>
@@ -131,5 +131,5 @@ export default function Register() {
                     </Center>
                 </>
             }
-        </>)
+        </>);
 }

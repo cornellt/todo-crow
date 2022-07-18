@@ -61,7 +61,7 @@ export default function TodoList() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const toggleTodo = async (todoId: string, currentValue: boolean) => {
         try {
@@ -69,7 +69,7 @@ export default function TodoList() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     return (
         <VStack align='end'>
@@ -87,5 +87,5 @@ export default function TodoList() {
                 <Todo key={completeTodo.id} data={completeTodo} delete={deleteTodo} toggle={toggleTodo} />
             )}
         </VStack>
-    )
+    );
 }
