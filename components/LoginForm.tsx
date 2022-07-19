@@ -1,15 +1,39 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { Center, Heading, Input, InputGroup, Button, InputRightElement, VStack, Divider, Tooltip, Text, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link';
+import * as EmailValidator from 'email-validator';
+
 
 export default function LoginForm(props: LoginFormProps) {
     const [show, setShow] = useState(false);
     const toggleShowPassword = () => setShow(!show);
 
+    const [email, setEmail] = useState('');
+    const handleChangeEmail = (event: FormEvent<HTMLInputElement>) => {
+        const currentValue = event.currentTarget.value;
+        setEmail(currentValue);
+        setEmailValid(EmailValidator.validate(currentValue));
+    };
+
+    const [password, setPassword] = useState('');
+    const handleChangePassword = (event: FormEvent<HTMLInputElement>) => {
+        const currentValue = event.currentTarget.value;
+        setPassword(currentValue);
+        setPasswordLongEnough(currentValue.length >= 6);
+    };
+
+    //Checks before login button is enabled
+    const [emailValid, setEmailValid] = useState(false);
+    const [passwordLongEnough, setPasswordLongEnough] = useState(false);
+    const [signInValid, setSignInValid] = useState(false);
+    useEffect(() => {
+        setSignInValid(emailValid && passwordLongEnough);
+    }, [emailValid, passwordLongEnough]);
+
     const submitForm = (event: FormEvent) => {
         event.preventDefault();
-        if (props.signInValid) {
-            props.handleSignInForm();
+        if (signInValid) {
+            props.handleSignInForm(email, password);
         }
     };
 
@@ -24,8 +48,8 @@ export default function LoginForm(props: LoginFormProps) {
                 <Divider borderColor='gray.400' />
                 <form onSubmit={submitForm}>
                     <Input
-                        value={props.email}
-                        onChange={props.handleChangeEmail}
+                        value={email}
+                        onChange={handleChangeEmail}
                         placeholder='Enter email'
                         borderColor='gray.300'
                         backgroundColor='gray.100'
@@ -36,8 +60,8 @@ export default function LoginForm(props: LoginFormProps) {
                         <Input
                             pr='4.5rem'
                             type={show ? 'text' : 'password'}
-                            value={props.password}
-                            onChange={props.handleChangePassword}
+                            value={password}
+                            onChange={handleChangePassword}
                             placeholder='Enter password'
                             borderColor='gray.300'
                             backgroundColor='gray.100'
@@ -55,8 +79,8 @@ export default function LoginForm(props: LoginFormProps) {
                         </InputRightElement>
                     </InputGroup>
                 </form>
-                    {props.signInValid ? <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button> :
-                        <Tooltip hasArrow label={!props.emailValid ? 'Enter a valid email!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
+                    {signInValid ? <Button onClick={submitForm} colorScheme={'green'}>Sign In</Button> :
+                        <Tooltip hasArrow label={!emailValid ? 'Enter a valid email!' : 'Password must be at least 6 characters long!'} shouldWrapChildren mt='1'>
                             <Button width='100%' onClick={submitForm} isDisabled colorScheme={'green'}>Sign In</Button>
                         </Tooltip>}
                 <Text align='center'>

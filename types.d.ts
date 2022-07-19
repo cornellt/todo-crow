@@ -14,14 +14,7 @@ interface TodoProps {
 };
 
 interface LoginFormProps  {
-    email: string;
-    handleChangeEmail: (event: FormEvent<HTMLInputElement>) => void;
-    password: string;
-    handleChangePassword: (event: FormEvent<HTMLInputElement>) => void;
-    handleSignInForm: () => void;
-    emailValid: boolean;
-    passwordLongEnough: boolean;
-    signInValid: boolean;
+    handleSignInForm: (email: string, password: string) => void;
 };
 
 interface RegisterFormProps  {

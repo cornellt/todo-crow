@@ -4,8 +4,7 @@ import { auth } from '../firebase/client';
 import LoginForm from '../components/LoginForm';
 import Header from '../components/Header';
 import { useRouter } from 'next/router';
-import { useEffect, useState, FormEvent } from 'react';
-import * as EmailValidator from 'email-validator';
+import { useEffect } from 'react';
 
 export default function Login() {
     const { push } = useRouter(); 
@@ -19,36 +18,9 @@ export default function Login() {
 
     const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
-    const [email, setEmail] = useState('');
-    const handleChangeEmail = (event: FormEvent<HTMLInputElement>) => {
-        const currentValue = event.currentTarget.value;
-        setEmail(currentValue);
-        setEmailValid(EmailValidator.validate(currentValue));
-    };
-
-    const [password, setPassword] = useState('');
-    const handleChangePassword = (event: FormEvent<HTMLInputElement>) => {
-        const currentValue = event.currentTarget.value;
-        setPassword(currentValue);
-        setPasswordLongEnough(currentValue.length >= 6);
-    };
-
-    //Checks before login button is enabled
-    const [emailValid, setEmailValid] = useState(false);
-    const [passwordLongEnough, setPasswordLongEnough] = useState(false);
-    const [signInValid, setSignInValid] = useState(false);
-    useEffect(() => {
-        setSignInValid(emailValid && passwordLongEnough);
-    }, [emailValid, passwordLongEnough]);
-
     //handler for sign in form
-    const handleSignInForm = () => {
-        if (signInValid) {
-            signInWithEmailAndPassword(email, password);
-        }
-        else {
-            console.log("Sign in invalid!");
-        }
+    const handleSignInForm = (email: string, password: string) => {
+        signInWithEmailAndPassword(email, password);
     };
 
     //redirect to '/' if user is already authenticated
@@ -99,16 +71,7 @@ export default function Login() {
             <>
                 <Header />
                 <Center p={3}>
-                    <LoginForm 
-                        email={email}
-                        handleChangeEmail={handleChangeEmail}
-                        password={password}
-                        handleChangePassword={handleChangePassword}
-                        handleSignInForm={handleSignInForm}
-                        emailValid={emailValid}
-                        passwordLongEnough={passwordLongEnough}
-                        signInValid={signInValid}
-                    />
+                    <LoginForm handleSignInForm={handleSignInForm} />
                 </Center>
             </>
         }
