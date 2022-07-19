@@ -18,15 +18,5 @@ interface LoginFormProps  {
 };
 
 interface RegisterFormProps  {
-    email: string;
-    handleChangeEmail: (event: FormEvent<HTMLInputElement>) => void;
-    emailValid: boolean;
-    password: string;
-    handleChangePassword: (event: FormEvent<HTMLInputElement>) => void;
-    passwordLongEnough: boolean;
-    confirmPassword: string;
-    handleChangeConfirmPassword: (event: FormEvent<HTMLInputElement>) => void;
-    passwordsMatch: boolean;
-    registrationValid: boolean;
-    handleSignUpForm: () => void;
+    handleSignUpForm: (email: string, password: string) => void;
 };

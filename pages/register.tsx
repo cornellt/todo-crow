@@ -3,8 +3,7 @@ import { useCreateUserWithEmailAndPassword, useAuthState } from 'react-firebase-
 import { auth } from '../firebase/client';
 import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
-import { useState, useEffect, FormEvent } from 'react';
-import * as EmailValidator from 'email-validator';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Register() {
@@ -19,50 +18,9 @@ export default function Register() {
 
     const [userAuthState, loadingAuthState, errorAuthState] = useAuthState(auth);
 
-    //State for register form
-    const [email, setEmail] = useState('');
-    const handleChangeEmail = (event: FormEvent<HTMLInputElement>) => {
-        const currentValue = event.currentTarget.value;
-        setEmail(currentValue);
-        setEmailValid(EmailValidator.validate(currentValue));
-    }
-
-    const [password, setPassword] = useState('');
-    const handleChangePassword = (event: FormEvent<HTMLInputElement>) => {
-        const currentValue = event.currentTarget.value;
-        setPassword(currentValue);
-        setPasswordLongEnough(currentValue.length >= 6);
-    }
-
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const handleChangeConfirmPassword = (event: FormEvent<HTMLInputElement>) => {
-        setConfirmPassword(event.currentTarget.value);
-    };
-
-    //If either password or confirmPassword change, check if they match and update passwordsMatch variable
-    useEffect(() => {
-        setPasswordsMatch(password === confirmPassword);
-    }, [password, confirmPassword]);
-
-    //Checks before registration sent
-    const [emailValid, setEmailValid] = useState(false);
-    const [passwordLongEnough, setPasswordLongEnough] = useState(false);
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [registrationValid, setRegistrationValid] = useState(emailValid && passwordLongEnough && passwordsMatch);
-
-    //emailValid, passwordsMatch, and passwordLongEnough are the 3 requirements for valid Registration. If any of these variables change, update registrationValid accordingly
-    useEffect(() => {
-        setRegistrationValid(emailValid && passwordsMatch && passwordLongEnough);
-    }, [emailValid, passwordsMatch, passwordLongEnough]);
-
     //create user in Firebase if registration is valid
-    const handleSignUpForm = () => {
-        if (registrationValid) {
-            createUserWithEmailAndPassword(email, password);
-        }
-        else {
-            console.log('Registration invalid!');
-        }
+    const handleSignUpForm = (email: string, password: string) => {
+        createUserWithEmailAndPassword(email, password);
     };
 
     //redirect to '/' if user is already logged in
@@ -115,19 +73,7 @@ export default function Register() {
                 <>
                     <Header />
                     <Center p={3}>
-                        <RegisterForm
-                            email={email}
-                            handleChangeEmail={handleChangeEmail}
-                            emailValid={emailValid}
-                            password={password}
-                            handleChangePassword={handleChangePassword}
-                            passwordLongEnough={passwordLongEnough}
-                            confirmPassword={confirmPassword}
-                            handleChangeConfirmPassword={handleChangeConfirmPassword}
-                            passwordsMatch={passwordsMatch}
-                            registrationValid={registrationValid}
-                            handleSignUpForm={handleSignUpForm}
-                        />
+                        <RegisterForm handleSignUpForm={handleSignUpForm} />
                     </Center>
                 </>
             }
