@@ -1,6 +1,6 @@
 [todo-crow](https://todo-crow.vercel.app) by Thomas Cornell
 
-A simple, yet elegant, todo-list app.
+A simple, yet elegant, todo-list app with full authentication.
 
 Implemented and deployed using:
 - Next.js
